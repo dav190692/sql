@@ -1,39 +1,135 @@
-select * from employees;
+SELECT
+    *
+FROM
+    employees;
 
-
-select manager_id man_id, TO_CHAR(null) job_id, TO_NUMBER(null) dep_id, SUM(salary) from employees 
-GROUP BY manager_id
+SELECT
+    manager_id      man_id,
+    to_char(NULL)   job_id,
+    TO_NUMBER(NULL) dep_id,
+    SUM(salary)
+FROM
+    employees
+GROUP BY
+    manager_id
 UNION
-select TO_NUMBER(null), job_id, TO_NUMBER(null), SUM(salary) from employees
-GROUP BY job_id
+SELECT
+    TO_NUMBER(NULL),
+    job_id,
+    TO_NUMBER(NULL),
+    SUM(salary)
+FROM
+    employees
+GROUP BY
+    job_id
 UNION
-select TO_NUMBER(null),TO_CHAR(null), department_id, SUM(salary) from employees
-group by department_id;
+SELECT
+    TO_NUMBER(NULL),
+    to_char(NULL),
+    department_id,
+    SUM(salary)
+FROM
+    employees
+GROUP BY
+    department_id;
 
-select department_id from employees where manager_id like 100
-minus
-select department_id from employees where manager_id IN (145,201);
+SELECT
+    department_id
+FROM
+    employees
+WHERE
+    manager_id LIKE 100
+MINUS
+SELECT
+    department_id
+FROM
+    employees
+WHERE
+    manager_id IN ( 145, 201 );
 
-select first_name, last_name, salary from employees where first_name like '_a%'
+SELECT
+    first_name,
+    last_name,
+    salary
+FROM
+    employees
+WHERE
+    first_name LIKE '_a%'
 INTERSECT
-select first_name, last_name, salary from employees where LOWER(last_name) like  '%s%'
-ORDER BY salary DESC;
+SELECT
+    first_name,
+    last_name,
+    salary
+FROM
+    employees
+WHERE
+    lower(last_name) LIKE '%s%'
+ORDER BY
+    salary DESC;
 
-select * from locations;
-select * from countries;
+SELECT
+    *
+FROM
+    locations;
 
-select location_id, postal_code, city from locations 
-where country_id IN (select country_id from countries where country_name IN('Italy', 'Germany'))
+SELECT
+    *
+FROM
+    countries;
+
+SELECT
+    location_id,
+    postal_code,
+    city
+FROM
+    locations
+WHERE
+    country_id IN (
+        SELECT
+            country_id
+        FROM
+            countries
+        WHERE
+            country_name IN ( 'Italy', 'Germany' )
+    )
 UNION ALL
-select location_id, postal_code, city from locations where postal_code like '%9%';
+SELECT
+    location_id,
+    postal_code,
+    city
+FROM
+    locations
+WHERE
+    postal_code LIKE '%9%';
 
+SELECT
+    *
+FROM
+    countries;
 
-select * from countries;
-select * from regions;
+SELECT
+    *
+FROM
+    regions;
 
-select country_id id, country_name country, region_name region from countries c
-JOIN regions r ON(c.region_id = r.region_id) where region_name != 'Europe' 
+SELECT
+    country_id   id,
+    country_name country,
+    region_name  region
+FROM
+         countries c
+    JOIN regions r ON ( c.region_id = r.region_id )
+WHERE
+    region_name != 'Europe'
 UNION
-select country_id, country_name, region_name from countries c
-JOIN regions r ON(c.region_id = r.region_id) where LENGTH(country_name)> 8
-order by  country DESC;
+SELECT
+    country_id,
+    country_name,
+    region_name
+FROM
+         countries c
+    JOIN regions r ON ( c.region_id = r.region_id )
+WHERE
+    length(country_name) > 8
+ORDER BY
+    country DESC;
